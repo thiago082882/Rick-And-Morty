@@ -1,0 +1,29 @@
+package org.kmp.rickandmorty
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import org.kmp.rickandmorty.utils.setActivityProvider
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        //installSplashScreen()
+        super.onCreate(savedInstanceState)
+        setActivityProvider {  this }
+        setContent {
+            enableEdgeToEdge(
+                SystemBarStyle.dark(MaterialTheme.colorScheme.onSurface.toArgb()),
+                SystemBarStyle.dark(MaterialTheme.colorScheme.onSurface.toArgb()),
+            )
+            App()
+        }
+    }
+}
+

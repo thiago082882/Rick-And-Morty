@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">News app</string>
+
+    <string name="theme">Theme</string>
+    <string name="delete_bookmark">Delete favorite</string>
+    <string name="delete">Delete</string>
+    <string name="delete_bookmark_description">Are you sure you want to delete favorite?</string>
+    <string name="cancel">Cancel</string>
+    <string name="apply">Apply</string>
+    <string name="setting">Setting</string>
+    <string name="retry">Retry</string>
+    <string name="go_back">Go Back</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="light_mode">Light Mode</string>
+    <string name="blue_mode">Blue Mode</string>
+    <string name="green_mode">Green Mode</string>
+    <string name="red_mode">Red Mode</string>
+    <string name="system_default">System Default</string>
+    <string name="choose_a_theme">Choose a theme</string>
+    <string name="no_character">No Character</string>
+    <string name="no_favorites">No favorites yet!</string>
+</resources>
