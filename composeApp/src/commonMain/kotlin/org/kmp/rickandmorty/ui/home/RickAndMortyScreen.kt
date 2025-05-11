@@ -22,11 +22,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import org.jetbrains.compose.resources.stringResource
@@ -50,6 +52,10 @@ fun RickAndMortyScreen(rootNavController: NavController, paddingValues: PaddingV
     val uiState by viewModel.charactersStateFlow.collectAsState()
     val originDirection = LocalLayoutDirection.current
 
+    LaunchedEffect(Unit) {
+        viewModel.fetchCharacters()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,6 +68,8 @@ fun RickAndMortyScreen(rootNavController: NavController, paddingValues: PaddingV
         TopAppBar(
             title = {
                 Text(
+                    modifier = Modifier
+                        .testTag("appBarTitle"),
                     text = "Rick and Morty",
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
@@ -72,13 +80,14 @@ fun RickAndMortyScreen(rootNavController: NavController, paddingValues: PaddingV
                 // Bookmark icon - added first so it appears to the left of settings
                 IconButton(onClick = {
                     rootNavController.navigate(SavedRouteScreen.SavedDetail.route)
-                }) {
+                }, modifier = Modifier.testTag("bookmarkButton")
+                ) {
                     Icon(imageVector = Icons.Filled.Favorite, contentDescription = "Saved items")
                 }
                 // Settings icon
                 IconButton(onClick = {
                     rootNavController.navigate(SettingRouteScreen.SettingDetail.route)
-                }) {
+                }, modifier = Modifier.testTag("settingsButton")) {
                     Icon(imageVector = Icons.Filled.Settings, contentDescription = "Settings")
                 }
             }
@@ -94,6 +103,7 @@ fun RickAndMortyScreen(rootNavController: NavController, paddingValues: PaddingV
         ) {
             items(categoryList, key = { it }) { category ->
                 FilterChip(
+                    modifier = Modifier.testTag("categoryChip_$category"),
                     selected = category in viewModel.selectedCategories,
                     onClick = { viewModel.toggleCategory(category) },
                     label = { Text(category) },

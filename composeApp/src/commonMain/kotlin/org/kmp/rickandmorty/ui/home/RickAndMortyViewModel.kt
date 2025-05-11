@@ -5,15 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.kmp.rickandmorty.data.model.Character
 import org.kmp.rickandmorty.data.repository.RickAndMortyRepository
 import org.kmp.rickandmorty.utils.Resource
-import org.kmp.rickandmorty.utils.categoryList
 
 
 class RickAndMortyViewModel(
@@ -27,24 +24,8 @@ class RickAndMortyViewModel(
 
     var selectedCategories by mutableStateOf(setOf<String>())
 
-    init {
-        fetchCharacters()
-    }
-
-//    fun fetchCharacters() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            _charactersStateFlow.emit(Resource.Loading)
-//            try {
-//                val characters = rickAndMortyRepository.getAllCharacters()
-//                _charactersStateFlow.emit(Resource.Success(characters))
-//            } catch (e: Exception) {
-//                _charactersStateFlow.emit(Resource.Error(e.message.toString()))
-//            }
-//        }
-//    }
-
     fun fetchCharacters() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _charactersStateFlow.emit(Resource.Loading)
             try {
                 val characters = rickAndMortyRepository.getAllCharacters()
@@ -69,4 +50,5 @@ class RickAndMortyViewModel(
         }
         fetchCharacters()
     }
+
 }

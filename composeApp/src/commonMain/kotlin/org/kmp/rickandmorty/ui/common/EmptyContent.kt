@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.LightGray
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 
@@ -30,24 +31,28 @@ import rickandmorty.composeapp.generated.resources.retry
 
 @Composable
 fun EmptyContent(
+    modifier: Modifier = Modifier,
     message: String,
     icon: DrawableResource,
     isOnRetryBtnVisible: Boolean = true,
-    onRetryClick: (() -> Unit) = { }
+    onRetryClick: () -> Unit = { }
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
+            .testTag("emptyContent"),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Icon(
-            modifier = Modifier.size(imageSize),
+            modifier = Modifier.size(imageSize)
+                .testTag("emptyIcon"),
             painter = painterResource(icon),
             tint = if (!isSystemInDarkTheme()) LightGray else DarkGray,
             contentDescription = null
         )
         Text(
-            modifier = Modifier.padding(smallPadding),
+            modifier = Modifier.padding(smallPadding)
+                .testTag("emptyMessage"),
             text = message,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Medium,
@@ -55,7 +60,7 @@ fun EmptyContent(
             color = if (!isSystemInDarkTheme()) LightGray else DarkGray,
         )
         if (isOnRetryBtnVisible) {
-            Button(onClick = onRetryClick) {
+            Button(onClick = onRetryClick,modifier = Modifier.testTag("retryButton")) {
                 Text(
                     text = stringResource(Res.string.retry),
                     style = MaterialTheme.typography.titleMedium

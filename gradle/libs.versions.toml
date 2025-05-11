@@ -1,8 +1,8 @@
 [versions]
-agp = "8.3.0"
-android-compileSdk = "34"
+agp = "8.5.2"
+android-compileSdk = "35"
 android-minSdk = "24"
-android-targetSdk = "34"
+android-targetSdk = "35"
 androidx-activityCompose = "1.9.3"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.0"
@@ -10,17 +10,15 @@ androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.8.4"
 androidx-material = "1.12.0"
-androidx-test-junit = "1.2.1"
 compose-multiplatform = "1.7.0"
-junit = "4.13.2"
-kotlin = "2.0.0"
+kotlin = "2.0.21"
 kotlinx-coroutines = "1.10.1"
 coil3 = "3.0.0-alpha06"
 ktor = "2.3.11"
 lifecycleViewmodel = "2.8.4"
 navigationCompose = "2.8.0-alpha02"
 coroutines = "1.8.1"
-ksp = "2.0.0-1.0.21"
+ksp = "2.0.21-1.0.25"
 sqlite = "2.5.0-SNAPSHOT"
 androidx-room = "2.7.0-alpha04"
 kotlinx-serialization = "1.5.1"
@@ -31,16 +29,22 @@ coreSplashscreen = "1.0.1"
 size = "0.5.0"
 koin = "4.0.1"
 
+#test
+
+kotlinx-coroutines-test = "1.8.0"
+turbine = "0.7.0"
+assertK = "0.25"
+testng = "6.9.6"
+compose-test = "1.7.6"
+junit = "4.13.2"
+kotlin-test-junit = "2.0.21"
+uiTestJunit4Android = "1.8.0"
+junitVersion = "4.12"
 [libraries]
 
 
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
-androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
@@ -53,6 +57,15 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version = "2.0.21" }
+test-assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertK" }
+test-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+test-compose-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-test" }
+test-core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidx-core-ktx" }
+
+
 
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
@@ -74,6 +87,9 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+testng = { group = "org.testng", name = "testng", version.ref = "testng" }
+androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "uiTestJunit4Android" }
+junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 
 
 

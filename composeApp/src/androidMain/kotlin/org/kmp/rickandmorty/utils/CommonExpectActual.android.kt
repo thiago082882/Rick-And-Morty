@@ -3,6 +3,7 @@ package org.kmp.rickandmorty.utils
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
@@ -13,13 +14,18 @@ import org.koin.mp.KoinPlatform
 import java.util.UUID
 
 actual fun shareLink(url: String) {
-    val sendIntent = Intent(Intent.ACTION_SEND).apply {
-        putExtra(Intent.EXTRA_TEXT, url)
-        type = "text/plain"
+    try {
+        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_TEXT, url)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, "Share Link")
+        activityProvider.invoke().startActivity(shareIntent)
+    } catch (e: IllegalArgumentException) {
+        Log.e("ShareLink", "Activity not set yet. Ignoring share call.", e)
     }
-    val shareIntent = Intent.createChooser(sendIntent, "Share Link")
-    activityProvider.invoke().startActivity(shareIntent)
 }
+
 private var activityProvider : () -> Activity = {
     throw IllegalArgumentException("Error")
 }

@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -47,6 +48,7 @@ fun SettingScreen(navController: NavController, settingViewModel: SettingViewMod
 
     if (showThemeSelectionDialog) {
         ThemeSelectionDialog(
+            modifier = Modifier.testTag("ThemeSelectionDialog"),
             currentTheme = currentTheme ?: Theme.DARK_MODE.name,
             onThemeChange = { theme ->
                 settingViewModel.changeThemeMode(theme.name)
@@ -58,6 +60,7 @@ fun SettingScreen(navController: NavController, settingViewModel: SettingViewMod
 
     if (showDeleteBookmarkDialog) {
         BookmarkDialog(
+            modifier = Modifier.testTag("BookmarkDialog"),
             onDeleteHistory = {
                 settingViewModel.deleteHistory()
                 showDeleteBookmarkDialog = false
@@ -69,6 +72,7 @@ fun SettingScreen(navController: NavController, settingViewModel: SettingViewMod
     Scaffold(
         topBar = {
             TopAppBar(
+                modifier = Modifier.testTag("SettingScreenTopBar"),
                 title = {
                     Text(
                         text = stringResource(Res.string.setting),
@@ -77,7 +81,9 @@ fun SettingScreen(navController: NavController, settingViewModel: SettingViewMod
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                    IconButton(
+                        modifier = Modifier.testTag("BackButton"),
+                        onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(Res.string.go_back)
@@ -91,6 +97,7 @@ fun SettingScreen(navController: NavController, settingViewModel: SettingViewMod
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .testTag("SettingsList"),
         ) {
             item {
                 Text(
@@ -98,12 +105,14 @@ fun SettingScreen(navController: NavController, settingViewModel: SettingViewMod
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(16.dp)
+                        .testTag("PreferencesTitle"),
                 )
             }
 
 
             item {
                 SettingItem(
+                    modifier = Modifier.testTag("SettingItem-Theme"),
                     icon = painterResource(Res.drawable.ic_light_mode),
                     title = stringResource(Res.string.theme),
                     subtitle = when (currentTheme) {
@@ -129,6 +138,7 @@ fun SettingScreen(navController: NavController, settingViewModel: SettingViewMod
 
             item {
                 SettingItem(
+                    modifier = Modifier.testTag("SettingItem-DeleteBookmark"),
                     icon = painterResource(Res.drawable.ic_delete),
                     title = stringResource(Res.string.delete_bookmark),
                     subtitle = "Remove all favorites",

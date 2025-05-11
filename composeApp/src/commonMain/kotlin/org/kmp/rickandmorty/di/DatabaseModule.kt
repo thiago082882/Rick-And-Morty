@@ -8,21 +8,26 @@ import kotlinx.coroutines.IO
 import org.kmp.rickandmorty.data.database.CharactersDatabase
 import org.kmp.rickandmorty.data.datastore.dataStorePreferences
 import org.kmp.rickandmorty.utils.AppPreferences
+import org.kmp.rickandmorty.utils.DataStoreAppPreferences
 import org.kmp.rickandmorty.utils.getDatabaseBuilder
 import org.koin.dsl.module
 
 val databaseModule = module {
-
-    // database
+    // Database
     single {
         getRoomDatabase(getDatabaseBuilder())
     }
 
-    // datastore
-    single {
-        AppPreferences(dataStorePreferences())
-    }
+    // DAOs
+    single { get<CharactersDatabase>().characterDao() }
 
+    // DataStore
+    single { dataStorePreferences() }
+
+    // AppPreferences
+    single<AppPreferences> {
+        DataStoreAppPreferences(get())
+    }
 }
 
 fun getRoomDatabase(

@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.kmp.rickandmorty.data.repository.LocalCharacterRepository
 import org.kmp.rickandmorty.utils.AppPreferences
+import org.kmp.rickandmorty.utils.DataStoreAppPreferences
 
 class SettingViewModel(
     private val appPreferences: AppPreferences,

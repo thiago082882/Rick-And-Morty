@@ -7,7 +7,7 @@ import org.kmp.rickandmorty.data.database.CharacterDao
 import org.kmp.rickandmorty.data.model.Character
 
 
-class LocalCharacterRepository(
+ open class LocalCharacterRepository(
     private val characterDao: CharacterDao
 ) {
     suspend fun upsertCharacter(character: Character) {

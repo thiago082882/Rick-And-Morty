@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
@@ -13,20 +14,45 @@ import org.kmp.rickandmorty.data.model.Character
 import org.kmp.rickandmorty.data.repository.LocalCharacterRepository
 
 
+//class CharacterDetailViewModel(
+//    private val localNewsRepository: LocalCharacterRepository
+//) : ViewModel() {
+//
+//    var isBookmarked by mutableStateOf(false)
+//
+//    fun isArticleBookmark(character: Character) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            isBookmarked = localNewsRepository.getCharacter(character.id) != null
+//        }
+//    }
+//
+//    fun bookmarkArticle(currentArticle: Character) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            if (!isBookmarked) {
+//                localNewsRepository.upsertCharacter(currentArticle)
+//            } else {
+//                localNewsRepository.deleteCharacter(currentArticle)
+//            }
+//            isBookmarked = !isBookmarked
+//        }
+//    }
+//
+//}
 class CharacterDetailViewModel(
-    private val localNewsRepository: LocalCharacterRepository
+    private val localNewsRepository: LocalCharacterRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     var isBookmarked by mutableStateOf(false)
 
     fun isArticleBookmark(character: Character) {
-        viewModelScope.launch(Dispatchers.IO) {
-            isBookmarked = localNewsRepository.getCharacter(character.id.toString()) != null
+        viewModelScope.launch(ioDispatcher) {
+            isBookmarked = localNewsRepository.getCharacter(character.id) != null
         }
     }
 
     fun bookmarkArticle(currentArticle: Character) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             if (!isBookmarked) {
                 localNewsRepository.upsertCharacter(currentArticle)
             } else {
@@ -35,5 +61,4 @@ class CharacterDetailViewModel(
             isBookmarked = !isBookmarked
         }
     }
-
 }

@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import org.jetbrains.compose.resources.stringResource
@@ -39,11 +40,14 @@ fun BookmarkScreen(
             start = paddingValues.calculateStartPadding(originDirection),
             end = paddingValues.calculateEndPadding(originDirection),
             bottom = paddingValues.calculateBottomPadding(),
-        ),
+        )
+            .testTag("bookmarkScreen"),
     ) {
         TopAppBar(
+            modifier = Modifier.testTag("bookmarkAppBar"),
             title = {
                 Text(
+                    modifier = Modifier.testTag("appBarTitle"),
                     text = "Favorites",
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
@@ -51,7 +55,9 @@ fun BookmarkScreen(
                 )
             },
             navigationIcon = {
-                IconButton(onClick = { rootNavController.popBackStack() }) {
+                IconButton(
+                    modifier = Modifier.testTag("backButton"),
+                    onClick = { rootNavController.popBackStack() }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"
@@ -59,7 +65,9 @@ fun BookmarkScreen(
                 }
             },
             actions = {
-                IconButton(onClick = {
+                IconButton(
+                    modifier = Modifier.testTag("settingsButton"),
+                    onClick = {
                     rootNavController.navigate(SettingRouteScreen.SettingDetail.route)
                 }) {
                     Icon(
@@ -75,6 +83,7 @@ fun BookmarkScreen(
         }, onSuccess = { articleList ->
             if (articleList.isEmpty()) {
                 EmptyContent(
+                    modifier = Modifier.testTag("emptyContent"),
                     message = stringResource(Res.string.no_favorites),
                     icon = Res.drawable.ic_browse, isOnRetryBtnVisible = false
                 )
@@ -85,7 +94,9 @@ fun BookmarkScreen(
                 )
             }
         }, onError = {
-            EmptyContent(message = it, icon = Res.drawable.ic_browse, onRetryClick = {
+            EmptyContent(
+                modifier = Modifier.testTag("errorContent"),
+                message = it, icon = Res.drawable.ic_browse, onRetryClick = {
                 bookmarkViewModel.getArticles()
             })
         })

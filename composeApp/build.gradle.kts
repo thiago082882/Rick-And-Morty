@@ -1,6 +1,8 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -21,6 +23,8 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
 
     listOf(
@@ -73,7 +77,7 @@ kotlin {
 
             //ViewModel
             implementation(libs.androidx.lifecycle.viewmodel)
-          //  implementation(libs.androidx.lifecycle.runtime.compose)
+            //  implementation(libs.androidx.lifecycle.runtime.compose)
 
             //Coil
             implementation(libs.coil.compose.core)
@@ -106,6 +110,8 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.composeVM)
 
+
+
         }
         desktopMain.dependencies {
 
@@ -118,6 +124,16 @@ kotlin {
 
             // Ktor
             implementation(libs.ktor.client.darwin)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.kotlin.test)
+            implementation(libs.test.turbine)
+            implementation(libs.test.assertk)
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+
+
         }
     }
 }
@@ -132,6 +148,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging {
         resources {
@@ -151,12 +168,22 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+
 }
 room {
     schemaDirectory("$projectDir/schemas")
 }
 dependencies {
-//    ksp(libs.androidx.room.compiler)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.ui.test.junit4.android)
+    androidTestImplementation(libs.testng)
+
+    //androidTestImplementation("androidx.compose.ui:ui-test-junit4-android:1.6.8")
+   // androidTestImplementation(libs.androidx.ui.test.junit4)
+//    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.7")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.7")
+
+    //    ksp(libs.androidx.room.compiler)
 
 //    add("kspAndroid", libs.androidx.room.compiler)
 //    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
@@ -167,7 +194,7 @@ dependencies {
     add("kspCommonMainMetadata", libs.androidx.room.compiler)
 }
 tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-    if (name != "kspCommonMainKotlinMetadata" ) {
+    if (name != "kspCommonMainKotlinMetadata") {
         dependsOn("kspCommonMainKotlinMetadata")
     }
 }

@@ -1,6 +1,5 @@
 package org.kmp.rickandmorty.ui.character_detail
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -62,7 +62,6 @@ import rickandmorty.composeapp.generated.resources.ic_browse
 import rickandmorty.composeapp.generated.resources.ic_favorite
 import rickandmorty.composeapp.generated.resources.ic_favorite_border
 import rickandmorty.composeapp.generated.resources.logo
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,7 +85,8 @@ fun CharacterDetailScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
                             contentDescription = "Voltar",
-                            tint = MaterialTheme.colorScheme.onBackground
+                            tint = MaterialTheme.colorScheme.onBackground,
+                            modifier = Modifier.testTag("BackButton")
                         )
                     }
                 },
@@ -97,12 +97,14 @@ fun CharacterDetailScreen(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onBackground,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.testTag("CharacterNameTopAppBar")
                     )
                 },
                 actions = {
                     IconButton(
-                        onClick = { shareLink(currentCharacter.url) }
+                        onClick = { shareLink(currentCharacter.url) },
+                        modifier = Modifier.testTag("ShareButton")
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Share,
@@ -111,7 +113,8 @@ fun CharacterDetailScreen(
                         )
                     }
                     IconButton(
-                        onClick = { url.openUri(currentCharacter.url) }
+                        onClick = { url.openUri(currentCharacter.url) },
+                        modifier = Modifier.testTag("BrowserButton")
                     ) {
                         Icon(
                             painter = painterResource(Res.drawable.ic_browse),
@@ -120,7 +123,8 @@ fun CharacterDetailScreen(
                         )
                     }
                     IconButton(
-                        onClick = { rickAndMortyViewModel.bookmarkArticle(currentCharacter) }
+                        onClick = { rickAndMortyViewModel.bookmarkArticle(currentCharacter) },
+                        modifier = Modifier.testTag("FavoriteButton")
                     ) {
                         Icon(
                             painter = painterResource(
@@ -132,9 +136,6 @@ fun CharacterDetailScreen(
                         )
                     }
                 },
-//                colors = TopAppBarDefaults.topAppBarColors(
-//                    containerColor = MaterialTheme.colorScheme.primaryContainer
-//                )
             )
         },
     ) { innerPadding ->
@@ -147,11 +148,11 @@ fun CharacterDetailScreen(
             verticalArrangement = Arrangement.spacedBy(xLargePadding)
         ) {
             item {
-
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1f),
+                        .aspectRatio(1f)
+                        .testTag("CharacterImageCard"),
                     shape = MaterialTheme.shapes.large,
                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                     colors = CardDefaults.cardColors(
@@ -161,7 +162,8 @@ fun CharacterDetailScreen(
                     AsyncImage(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(color = MaterialTheme.colorScheme.surfaceVariant),
+                            .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                            .testTag("CharacterImage"),
                         model = currentCharacter.image,
                         error = painterResource(Res.drawable.logo),
                         contentDescription = "Imagem do personagem ${currentCharacter.name}",
@@ -187,7 +189,7 @@ fun CharacterDetailScreen(
                             color = MaterialTheme.colorScheme.onBackground,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f).testTag("CharacterName")
                         )
 
                         Row(
@@ -201,15 +203,16 @@ fun CharacterDetailScreen(
                                     .background(
                                         status.color
                                     )
+                                    .testTag("CharacterStatusDot")
                             )
                             Text(
                                 text = currentCharacter.status.replaceFirstChar { it.uppercase() },
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.testTag("CharacterStatus")
                             )
                         }
                     }
-
 
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -224,19 +227,22 @@ fun CharacterDetailScreen(
 
                             CharacterDetailItem(
                                 title = "Species",
-                                value = currentCharacter.species.replaceFirstChar { it.uppercase() }
+                                value = currentCharacter.species.replaceFirstChar { it.uppercase() },
+                                modifier = Modifier.testTag("SpeciesDetail")
                             )
 
                             currentCharacter.type?.takeIf { it.isNotBlank() }?.let { type ->
                                 CharacterDetailItem(
                                     title = "Type",
-                                    value = type.replaceFirstChar { it.uppercase() }
+                                    value = type.replaceFirstChar { it.uppercase() },
+                                    modifier = Modifier.testTag("TypeDetail")
                                 )
                             }
 
                             CharacterDetailItem(
                                 title = "Gender",
-                                value = currentCharacter.gender.replaceFirstChar { it.uppercase() }
+                                value = currentCharacter.gender.replaceFirstChar { it.uppercase() },
+                                modifier = Modifier.testTag("GenderDetail")
                             )
                         }
                     }
@@ -257,16 +263,19 @@ fun CharacterDetailScreen(
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onBackground,
                                 modifier = Modifier.padding(bottom = 4.dp)
+                                    .testTag("LocationTitle")
                             )
 
                             CharacterDetailItem(
                                 title = "Origin",
-                                value = currentCharacter.origin.name.ifEmpty { "Unknown" }
+                                value = currentCharacter.origin.name.ifEmpty { "Unknown" },
+                                modifier = Modifier.testTag("OriginDetail")
                             )
 
                             CharacterDetailItem(
                                 title = "Last known",
-                                value = currentCharacter.location.name.ifEmpty { "Unknown" }
+                                value = currentCharacter.location.name.ifEmpty { "Unknown" },
+                                modifier = Modifier.testTag("LocationDetail")
                             )
                         }
                     }
@@ -282,7 +291,8 @@ fun CharacterDetailScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable { expandedEpisodes = !expandedEpisodes }
-                                    .padding(16.dp),
+                                    .padding(16.dp)
+                                    .testTag("EpisodesToggle"),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
@@ -294,7 +304,6 @@ fun CharacterDetailScreen(
                                 )
 
                                 Icon(
-
                                     imageVector = if (expandedEpisodes) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -317,8 +326,7 @@ fun CharacterDetailScreen(
                                             url = episodeUrl,
                                             modifier = Modifier.clickable {
                                                 url.openUri(episodeUrl)
-                                            }
-
+                                            }.testTag("EpisodeItem")
                                         )
                                     }
                                 }
@@ -330,4 +338,3 @@ fun CharacterDetailScreen(
         }
     }
 }
-

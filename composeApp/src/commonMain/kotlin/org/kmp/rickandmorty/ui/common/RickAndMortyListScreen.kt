@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -22,6 +24,7 @@ fun RickAndMortyListScreen(
     rootNavController: NavController
 ) {
     LazyVerticalStaggeredGrid(
+        modifier = Modifier.testTag("characterList"),
         columns = StaggeredGridCells.Adaptive(cardMinSize),
         verticalItemSpacing = mediumPadding,
         horizontalArrangement = Arrangement.spacedBy(mediumPadding),
