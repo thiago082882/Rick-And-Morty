@@ -15,8 +15,9 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import org.kmp.rickandmorty.kmp.rickandmorty.utils.FakeCharacters
-import org.kmp.rickandmorty.utils.TestTags
-import org.kmp.rickandmorty.utils.setCharacterDetailScreen
+import org.kmp.rickandmorty.ui.character_detail.utils.TestTags
+import org.kmp.rickandmorty.ui.character_detail.utils.setCharacterDetailScreen
+
 import kotlin.test.Test
 
 
@@ -45,7 +46,7 @@ class CharacterDetailScreenTest {
     @Test
     fun testEpisodesSectionToggle() = runComposeUiTest {
 
-        setCharacterDetailScreen(testCharacter)
+       setCharacterDetailScreen(testCharacter)
 
         waitForIdle()
 
@@ -86,7 +87,7 @@ class CharacterDetailScreenTest {
 
     @Test
     fun testBrowserButtonWorks() = runComposeUiTest {
-        setCharacterDetailScreen(testCharacter)
+       setCharacterDetailScreen(testCharacter)
 
         // Verifique se o botão do navegador é clicável e tenta abrir o URL do personagem
         onNodeWithTag(TestTags.BrowserButton)
@@ -97,7 +98,7 @@ class CharacterDetailScreenTest {
 
     @Test
     fun testFavoriteButtonWorks() = runComposeUiTest {
-        setCharacterDetailScreen(testCharacter)
+     setCharacterDetailScreen(testCharacter)
 
         // Verifique se o botão favorito alterna o estado do marcador
         onNodeWithTag(TestTags.FavoriteButton)
@@ -111,7 +112,7 @@ class CharacterDetailScreenTest {
 
     @Test
     fun testCharacterTypeDisplay() = runComposeUiTest {
-        setCharacterDetailScreen(testCharacter)
+      setCharacterDetailScreen(testCharacter)
         val type = testCharacter.type
         val capitalized =
             type?.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
@@ -130,7 +131,7 @@ class CharacterDetailScreenTest {
 
     @Test
     fun testLocationDetailsDisplayed() = runComposeUiTest {
-        setCharacterDetailScreen(testCharacter)
+   setCharacterDetailScreen(testCharacter)
 
         // Verifique se "Origem" e "Localização" são exibidos
         onNodeWithTag(TestTags.OriginDetail).assertIsDisplayed()
@@ -139,7 +140,7 @@ class CharacterDetailScreenTest {
 
     @Test
     fun testCharacterImageIsDisplayed() = runComposeUiTest {
-        setCharacterDetailScreen(testCharacter)
+     setCharacterDetailScreen(testCharacter)
 
         // Verifique se a imagem do personagem está sendo exibida corretamente
         onNodeWithTag(TestTags.CharacterImageCard)
@@ -152,7 +153,7 @@ class CharacterDetailScreenTest {
 
     @Test
     fun testCharacterNameAndStatusText() = runComposeUiTest {
-        setCharacterDetailScreen(testCharacter)
+       setCharacterDetailScreen(testCharacter)
 
         // Verifique se o nome do personagem e o texto de status são exibidos e correspondem aos dados esperados
         onNodeWithTag(TestTags.CharacterName).assertTextEquals(testCharacter.name)

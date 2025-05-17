@@ -1,4 +1,4 @@
-package org.kmp.rickandmorty.utils
+package org.kmp.rickandmorty.ui.character_detail.utils
 
 
 object TestTags {
